@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:onClick="onClick">
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="90sp" />
+
+
+
+    <!--<Button
+        android:id="@+id/start_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="СТАРТ"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="#EF5350"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold" />-->
+
+
+
+</RelativeLayout>
