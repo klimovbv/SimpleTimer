@@ -14,24 +14,17 @@ import java.util.TimerTask;
 
 public class MainActivity extends Activity {
 
-    private Timer timer;
-    TextView timerText;
-    int currentPeriod = 0;
-    Date startDate;
-    long startTime;
+    private Timer mTimer;
+    private TextView timerText;
+    private Date startDate;
+    private long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Log.d("myLogs", "---onCreate---");
         timerText = (TextView)findViewById(R.id.time_text);
-        if (savedInstanceState == null) {
-            timerText.setText("00:00.00");
-        } else {
-            onTimerStart(startTime);
-        }
     }
 
     @Override
@@ -47,8 +40,8 @@ public class MainActivity extends Activity {
     }
 
     public void onClick(View view) {
-        if (timer != null) {
-            timer.cancel();
+        if (mTimer != null) {
+            mTimer.cancel();
             timerText.setText("00:00.00");
         }
         startDate = new Date();
@@ -56,16 +49,16 @@ public class MainActivity extends Activity {
         onTimerStart(startTime);
     }
 
-    private void onTimerStart (long start){
+    private void onTimerStart (final long start){
         startTime = start;
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Date newDate = new Date();
                 long dateForTimer = newDate.getTime() - startTime;
-                final String temp = (new SimpleDateFormat("mm:ss.SS")).format(dateForTimer);
-                currentPeriod++;
+                final String temp = (new SimpleDateFormat("mm:ss.")).format(dateForTimer)
+                        + String.format("%02d", dateForTimer%1000/10);
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -86,6 +79,12 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         Log.d("myLogs", "---onResume---");
+        if (startTime == 0) {
+            timerText.setText("00:00.00");
+        } else {
+            onTimerStart(startTime);
+        }
+
     }
 
     @Override
@@ -105,6 +104,4 @@ public class MainActivity extends Activity {
         super.onDestroy();
         Log.d("myLogs", "---onDestroy---");
     }
-
-
 }
