@@ -12,6 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textColor="@color/red"
-        android:textSize="90sp" />
+        android:text="00:00.00"
+        android:singleLine="true"
+        android:textSize="80sp" />
 
 </RelativeLayout>

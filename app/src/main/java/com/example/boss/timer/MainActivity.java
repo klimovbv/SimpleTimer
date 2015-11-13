@@ -12,12 +12,12 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private Timer mTimer;
     private TextView timerText;
-    private Date startDate;
     private long startTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         timerText = (TextView)findViewById(R.id.time_text);
+        timerText.setOnClickListener(this);
     }
 
     @Override
@@ -39,12 +40,13 @@ public class MainActivity extends Activity {
         startTime = savedInstanceState.getLong("start_time");
     }
 
+    @Override
     public void onClick(View view) {
         if (mTimer != null) {
             mTimer.cancel();
             timerText.setText("00:00.00");
         }
-        startDate = new Date();
+        Date startDate = new Date();
         startTime = startDate.getTime();
         onTimerStart(startTime);
     }
@@ -58,7 +60,7 @@ public class MainActivity extends Activity {
                 Date newDate = new Date();
                 long dateForTimer = newDate.getTime() - startTime;
                 final String temp = (new SimpleDateFormat("mm:ss.")).format(dateForTimer)
-                        + String.format("%02d", dateForTimer%1000/10);
+                        + String.format("%02d", dateForTimer % 1000 / 10);
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -84,7 +86,6 @@ public class MainActivity extends Activity {
         } else {
             onTimerStart(startTime);
         }
-
     }
 
     @Override
